@@ -1,6 +1,6 @@
 const { db } = require("../util/admin");
 
-exports.getAllscreams = (req, res) => {
+exports.getAllScreams = (req, res) => {
   db.collection("screams")
     .orderBy("createdAt", "desc")
     .get()
@@ -25,9 +25,10 @@ exports.getAllscreams = (req, res) => {
 };
 
 exports.postOneScream = (req, res) => {
-  if (req.method !== "POST") {
-    return res.status(400).json({ error: "Method not allowed" });
+  if (req.body.body.trim() === "") {
+    return res.status(400).json({ body: "Body must not be empty" });
   }
+
   const newScream = {
     body: req.body.body,
     userHandle: req.user.handle,
